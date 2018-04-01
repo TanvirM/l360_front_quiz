@@ -15,8 +15,6 @@
                         </div>
 
 -->
-
-
         <div class="test_div"  v-for="(ques,index) in  questions">
           <div v-show="index === ques_index">
 
@@ -25,7 +23,7 @@
             <ol align="center" >
               <li class="test_list " v-for="(choice,$index) in ques.choices" >
                 <label class="center radio-button">
-                  <input type="radio" @change="correct" :value="choice.is_right" :name="index" id="choice.choice_id" :disabled="(minutes === 0 && seconds === 0 )"
+                  <input type="radio" @change="correct" :value="choice.is_right" :name="index" id="choice.choice_id"
                          v-model=" userResponses[index] ">
                   <v-ons-list-item tappable>{{ choice.choice_text }}</v-ons-list-item>
 
@@ -35,7 +33,7 @@
 
             </ol>
 
-              <v-ons-button class="prev_next_button" align ="center" modifier="cta" style="margin: 6px 0; " @click="prev()">
+              <v-ons-button class="prev_next_button" v-show="ques_index >= 1" align ="center" modifier="cta" style="margin: 6px 0; " @click="prev()">
                   Prev
               </v-ons-button>
               <v-ons-button class="prev_next_button" align ="center" modifier="cta" style="margin: 6px 0; " @click="next()">
@@ -45,8 +43,6 @@
 
           </div>
         </div>
-
-<!--
 
 
         <div v-if="ques_index === questions.length">
@@ -58,13 +54,13 @@
             Total score: {{ score ()}} /  {{ questions.length }}
           </p>
 
-          <v-ons-button v-if="this.c <=3" class="prev_next_button" modifier="cta" style="margin: 6px 0" @click="congratz">
+          <v-ons-button v-if="this.c <=3" class="prev_next_button" modifier="cta" style="margin: 6px 0" >
             Next
           </v-ons-button>
 
 
         </div>
-        -->
+
 
       </v-ons-card>
 
@@ -79,6 +75,7 @@
 
 
     export default {
+
         data() {
             return {
                 minutes:0,
@@ -97,53 +94,21 @@
             }
 
         },
+        created(){
+
+                // so nice
+                this.quest(this.data.minutes);
+
+
+        },
+
 
         mounted() {
-           this.quest(this.data.minutes);
+
             this.userResponses = Array(this.questions.length);
 
         },
         methods: {
-
-            quest(el) {
-                this.ExamNo ++;
-                if(this.ExamNo > 1)
-                {
-                    Swal("You must complete the exam");
-
-                }
-                var that = this;
-                that.$http({
-                    method: 'post',
-                    url: this.base_url + '/exam/api/',
-                    auth: {
-                        username: 'l360_mobile_app',
-                        password: 'itsd321#'
-                    },
-                    data: {
-                        "id": 202,
-                        "duration": el
-                    }
-
-                }).then((response) => {
-                    console.log(response);
-                    if (response.status === 200) {
-
-                        this.questions = response.data.questions
-                        console.log(this.questions);
-
-                    }
-
-
-                })
-                    .catch((error) => {
-                        alert(error);
-                    });
-
-
-
-
-            },
 
 
             next() {
@@ -158,6 +123,7 @@
                 this.c = this.userResponses.filter(function (val) {
                     return val
                 }).length;
+
                 return this.c;
             },
 
@@ -173,6 +139,7 @@
                 console.log(this.answered);
                 return this.answered;
             },
+       
         },
 
         computed: {

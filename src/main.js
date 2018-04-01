@@ -8,10 +8,15 @@ require('onsenui/css/onsenui.css');
 
 import App from './App';
 import axios from 'axios';
+import mix from './mixin';
+
+Vue.mixin(mix);
+
 
 Vue.use(VueOnsen);
 Vue.prototype.base_url = 'http://172.104.166.132';
 Vue.prototype.$http = axios;
+
 
 new Vue({
   el: '#app',

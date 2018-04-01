@@ -41,7 +41,10 @@
         import Swal from 'sweetalert2';
         import test from './test';
 
+
         export default {
+
+
             data() {
                 return {
                     minutes: 0
@@ -49,6 +52,7 @@
 
                 }
             },
+
 
         mounted(){
             document.addEventListener("deviceready", this.onDeviceReady, false);
@@ -77,15 +81,15 @@
                 },
                 onDeviceReady:  function  () {
                     document.addEventListener("backbutton", function(e){
-
-                    navigator.notification.confirm("Are you sure you want to exit ?",this.onConfirm(e), "Confirmation", "Yes,No");
                         alert('Back Button is Pressed!');
+                        navigator.notification.confirm("Are you sure you want to exit ?",this.onConfirm(), "Confirmation", "Yes,No");
+
 
                 },false)
                 },
                 onConfirm: function (button) {
                     if (button === 2) {//If User selected No, then we just do nothing
-                        return;
+
                     } else {
                         navigator.app.exitApp();// Otherwise we quit the app.
                     }

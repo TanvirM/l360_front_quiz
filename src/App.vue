@@ -7,7 +7,6 @@
 <script>
   import dash from './Dashboard';
 
-
   export default {
     data() {
       return {
